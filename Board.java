@@ -1,12 +1,12 @@
 package chess;
 import chess.piece.*;
-public class Board{
-    //0 für leer, 1-6 für Klasse?
-    //1,7 Pawn, 2,8 Rook, 3,9 Knight, 4,10 Bishop, 5,11 Queen, 6,12 King
-    //1-6 White, 7-12 Black
-    //oder von Typ ChessPiece? Sinnvoller wegen Color!
+import java.io.Serializable;
+
+public class Board implements Serializable{
+    //Board constists of 64 ChessPiece objects;
+    //ChessPiece=null for empty fields;
     ChessPiece[][] Board;
-    //int[][] Board=new int[8][8];
+    //constructor generating board with the starting positions
     public Board(){
         this.Board=new ChessPiece[8][8];
         Board[0][0]=new Rook(Color.BLACK);
@@ -34,18 +34,19 @@ public class Board{
     }
 
 
-    //Namen ändern für Englisch...
+    //Gets the board at the moment, meaning the positions of every ChessPiece on the field
     public ChessPiece[][] getBoard(){
-        ChessPiece[][] momentaneAufstellung=new ChessPiece[8][8];
+        ChessPiece[][] currentPositions=new ChessPiece[8][8];
         for(int i=0;i<8;i++){
             for (int j=0;j<8;j++){
-                momentaneAufstellung[i][j]=this.Board[i][j];
+                currentPositions[i][j]=this.Board[i][j];
             }
         }
-        return momentaneAufstellung;
+        return currentPositions;
     }
 
-
+    //Function to receive the current position of a certain ChessPiece at the moment
+    //First Integer tells row (0-7), second the column (0-7)
     public int[] getPosition(ChessPiece piece){
         int[] pos=new int[2];
         for(int i=0;i<8;i++) {
@@ -60,11 +61,22 @@ public class Board{
         return pos;
     }
 
-    public void move(int rowCur, int colCur, int rowDes, int colDes){}
+    public void move(int rowCur, int colCur, int rowDes, int colDes){
+        ChessPiece[][] Board=getBoard();
+        ChessPiece Piece=Board[rowCur][colCur];
+        //if canmove==true...
+        Board[rowCur][colCur]=null;
+        Board[rowDes][colDes]=Piece;
+        this.Board=Board;
+    }
+
+
+    //Get the current board and turn it into a String visualizing it
     public String toString(){
-        String Result="";
+        String Result=" a.b.cd.e.fg.h\n";
         ChessPiece[][] Board=getBoard();
         for(int i=0;i<8;i++) {
+            Result+=(i+1);
             for (int j = 0; j < 8; j++) {
                 if(Board[i][j]==null){
                     Result+="\u26da";

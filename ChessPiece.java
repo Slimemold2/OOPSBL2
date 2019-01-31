@@ -1,6 +1,8 @@
 package chess.piece;
 import chess.*;
-public abstract class ChessPiece{
+import java.io.Serializable;
+
+public abstract class ChessPiece implements Serializable{
     ChessPieceType type;
     Color color;
 
@@ -26,8 +28,20 @@ public abstract class ChessPiece{
         else{return false;}
     }
 
-    public boolean[][] getPossibleDestinations(Board board){return null;}
+    public boolean[][] getPossibleDestinations(Board board){
+        boolean[][] array=new boolean[8][8];
+        for(int i=0;i<8;i++) {
+            for (int j = 0; j < 8; j++) {
+                if(canMove(board,i,j)){
+                    array[i][j]=true;
+                }
+                else{array[i][j]=false;}
+            }
+        }
+        canMove(board,0,1);
+        return array;
+    }
 
     //optionale Hilfsmethode
-    public boolean canMove(Board board, int row, int col){return true;}
+    public abstract boolean canMove(Board board, int row, int col);
 }
