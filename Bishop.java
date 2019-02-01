@@ -1,5 +1,7 @@
 package chess.piece;
 import chess.*;
+//mainly only commented King as Code is quite similar for all subclasses...
+//function "canMove" is commented for more subclasses
 
 public class Bishop extends ChessPiece{
     public Bishop(Color color){
@@ -20,7 +22,7 @@ public class Bishop extends ChessPiece{
         //Diagonal
         if((currentrow-row==currentcol-col||currentrow-row==col-currentcol)&&!(currentrow-row==0&&currentcol-col==0)) {
             //nach rechts unten
-            if (currentcol - col < 0&&row-currentrow<0) {
+            if (currentcol - col < 0&&currentrow-row<0) {
                 //checke ob Pfad frei
                 for (int i = 1; i <= col-currentcol; i++) {
                     if (board.getBoard()[currentcol+i][currentcol+i] != null) {

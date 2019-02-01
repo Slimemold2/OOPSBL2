@@ -61,10 +61,10 @@ public class Board implements Serializable{
         return pos;
     }
 
+    //moves one chesspiece from rowCur, colCur to rowDes, colDes
     public void move(int rowCur, int colCur, int rowDes, int colDes){
         ChessPiece[][] Board=getBoard();
         ChessPiece Piece=Board[rowCur][colCur];
-        //if canmove==true...
         Board[rowCur][colCur]=null;
         Board[rowDes][colDes]=Piece;
         this.Board=Board;

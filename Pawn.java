@@ -1,5 +1,7 @@
 package chess.piece;
 import chess.*;
+//mainly only commented King as Code is quite similar for all subclasses...
+//function "canMove" is commented for more subclasses
 
 public class Pawn extends ChessPiece{
     public Pawn(Color color){
@@ -16,8 +18,14 @@ public class Pawn extends ChessPiece{
         int[] pos = board.getPosition(this);
         int currentrow = pos[0];
         int currentcol = pos[1];
+        //if it is the first turn adjust the range
+        int range=1;
         if (this.getColor() == Color.WHITE) {
-            if ((currentrow - row == 1) && (currentcol - col == 0)) {
+            //Check if still at starting position; if so, adjust range
+            if(currentrow==6){
+                range=2;
+            }
+            if ((currentrow - row == 1) && (currentcol - col == 0)||(currentrow - row == range) && (currentcol - col == 0)) {
                 if (board.getBoard()[row][col] == null) {
                     return true;
                 } else {
@@ -33,7 +41,11 @@ public class Pawn extends ChessPiece{
                 return false;
             }
         } else if (this.getColor() == Color.BLACK) {
-            if ((currentrow - row == -1) && (currentcol - col == 0)) {
+            //Check if still at starting position; if so, adjust range
+            if(currentrow==1){
+                range=2;
+            }
+            if ((currentrow - row == -1) && (currentcol - col == 0)||(currentrow - row == -range) && (currentcol - col == 0)) {
                 if (board.getBoard()[row][col] == null) {
                     return true;
                 } else {

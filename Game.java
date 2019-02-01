@@ -117,8 +117,15 @@ public class Game implements Serializable{
                     }
                 }
             }
-
-
+            //Check if the game will end
+            if(game.board.getBoard()[game.rowDest][game.colDest]!=null&&game.board.getBoard()[game.rowDest][game.colDest].getClass().toString().equals("class chess.piece.King")){
+                game.end=true;
+                //Check who won
+                if(game.currentColor==Color.WHITE) {
+                    game.winner = "White";
+                }
+                else {game.winner="Black";}
+            }
             //Do the move and store it
             if(game.board.getBoard()[game.rowDest][game.colDest]==null){
                 game.moves.add(game.board.getBoard()[game.row][game.col].toString()+ translateColumn(game.col) + (game.row+1)  + "-" + translateColumn(game.colDest) + (game.rowDest+1));
@@ -129,15 +136,6 @@ public class Game implements Serializable{
             game.board.move(game.row,game.col,game.rowDest,game.colDest);
             game.player=game.player+1;
 
-            //Check if the game ended
-            if(game.board.getBoard()[game.rowDest][game.colDest].getClass().equals("class chess.piece.King")){
-                game.end=true;
-                //Check who won
-                if(game.currentColor==Color.WHITE) {
-                    game.winner = "White";
-                }
-                else {game.winner="Black";}
-            }
         }
 
 
@@ -156,16 +154,11 @@ public class Game implements Serializable{
         this.whiteKing=this.board.getBoard()[0][4];
         this.blackKing=this.board.getBoard()[7][4];
         this.end=false;
-        this.player=1;
         this.round=0;
-        this.currentColor=Color.WHITE;
-        this.command="";
-        this.invalidInput=true;
-        this.invalidMove=true;
     }
 
     //getter function
-    public ArrayList<String> getMoves(){return this.moves;}
+    private ArrayList<String> getMoves(){return this.moves;}
 
     //save the moves done so far in a new file with the name filename
     public void saveMoves(String filename) {
@@ -209,7 +202,7 @@ public class Game implements Serializable{
         finally {
             if (oos != null)
                 try { oos.close(); }
-                catch (IOException e) {}
+                catch (IOException e) {e.printStackTrace();}
         }
     }
 
@@ -234,7 +227,7 @@ public class Game implements Serializable{
         finally {
             if (ois != null)
                 try { ois.close(); }
-                catch (IOException e) {}
+                catch (IOException e) {e.printStackTrace();}
         }
         return game;
     }
@@ -261,14 +254,14 @@ public class Game implements Serializable{
         finally {
             if (rd != null)
                 try { rd.close(); }
-                catch (IOException e) {}
+                catch (IOException e) {e.printStackTrace();}
         }
         game=loadGameByMoves(moves);
         return game;
     }
 
     //load Game by redoing the moves stored in moves
-    public static Game loadGameByMoves(ArrayList<String> moves){
+    private static Game loadGameByMoves(ArrayList<String> moves){
         Game game=new Game();
         for(int i=0; i<moves.size();i++){
             String move=moves.get(i);
@@ -292,7 +285,7 @@ public class Game implements Serializable{
     }
 
     //translate the column from integer (0-7) used intern to a character (a-h) for the user
-    public static char translateColumn(int position){
+    private static char translateColumn(int position){
         if(position==0){return 'a';}
         if(position==1){return 'b';}
         if(position==2){return 'c';}
@@ -303,7 +296,7 @@ public class Game implements Serializable{
         else{return 'h';}
     }
     //reverses above function
-    public static int translateColumn(char position){
+    private static int translateColumn(char position){
         if(position=='a'){return 0;}
         if(position=='b'){return 1;}
         if(position=='c'){return 2;}

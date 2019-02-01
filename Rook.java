@@ -1,5 +1,7 @@
 package chess.piece;
 import chess.*;
+//mainly only commented King as Code is quite similar for all subclasses...
+//function "canMove" is commented for more subclasses
 
 public class Rook extends ChessPiece{
     public Rook(Color color){
@@ -16,50 +18,48 @@ public class Rook extends ChessPiece{
         int[] pos=board.getPosition(this);
         int currentrow=pos[0];
         int currentcol=pos[1];
-        //Reihe entlang ->
+        //row <->
         if(currentrow-row==0 && currentcol-col!=0) {
-            //nach rechts
+            //to the right ->
             if (currentcol - col < 0) {
-                //checke ob Pfad frei
+                //check whether path is free
                 for (int i = currentcol + 1; i < col; i++) {
                     if (board.getBoard()[currentrow][i] != null) {
                         return false;
                     }
                 }
             }
-            //nach links
+            //to the left <-
             else {
-                //checke ob Pfad frei
-                for (int i = currentcol - 1; i >= col; i--) {
+                for (int i = currentcol - 1; i > col; i--) {
                     if (board.getBoard()[currentrow][i] != null) {
                         return false;
                     }
                 }
             }
         }
-        //Spalte entlang v
+        //column
         else if(currentcol-col==0 && currentrow-row!=0) {
-            //nach unten
+            //down v
             if (currentrow - row < 0) {
-                //checke ob Pfad frei
                 for (int i = currentrow + 1; i < row; i++) {
                     if (board.getBoard()[i][currentcol] != null) {
                         return false;
                     }
                 }
             }
-            //nach oben
+            //up ^
             else {
-                //checke ob Pfad frei
-                for (int i = currentrow - 1; i >= row; i--) {
+                for (int i = currentrow - 1; i > row; i--) {
                     if (board.getBoard()[i][currentcol] != null) {
                         return false;
                     }
                 }
             }
         }
+        //check whether field is in range
         if((currentcol-col==0 || currentrow-row==0)&&!(currentcol-col==0 && currentrow-row==0)){
-            //fuer jede Art verwendbar
+            //same for every class
             if(board.getBoard()[row][col]==null||board.getBoard()[row][col].getColor()!=this.getColor()){
                 return true;
             }
