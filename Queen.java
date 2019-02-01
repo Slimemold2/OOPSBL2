@@ -23,30 +23,35 @@ public class Queen extends ChessPiece{
 
         //like Bishop
         if((currentrow-row==currentcol-col||currentrow-row==col-currentcol)&&!(currentrow-row==0&&currentcol-col==0)) {
-            if (currentcol - col < 0&&row-currentrow<0) {
-                for (int i = 1; i <= col-currentcol; i++) {
-                    if (board.getBoard()[currentcol+i][currentcol+i] != null) {
+            //down right
+            if (currentcol - col < 0&&currentrow-row<0) {
+                //check if path is free
+                for (int i = 1; i <col-currentcol; i++) {
+                    if (board.getBoard()[currentrow+i][currentcol+i] != null) {
                         return false;
                     }
                 }
             }
+            //up right
             else if (currentcol - col < 0&&row-currentrow<0){
-                for (int i = 1; i <=col-currentcol; i++) {
-                    if (board.getBoard()[currentcol+i][currentcol-i] != null) {
+                for (int i = 1; i <col-currentcol; i++) {
+                    if (board.getBoard()[currentrow-i][currentcol+i] != null) {
                         return false;
                     }
                 }
             }
-            else if (currentcol - col > 0&&row-currentrow<0){
-                for (int i =  1; i <= currentcol-col; i++) {
-                    if (board.getBoard()[currentcol-i][currentcol+i] != null) {
+            //down left
+            else if (currentcol - col > 0&&row-currentrow>0){
+                for (int i =  1; i <currentcol-col; i++) {
+                    if (board.getBoard()[currentrow+i][currentcol-i] != null) {
                         return false;
                     }
                 }
             }
+            //up left
             else{
-                for (int i =  1; i <= currentcol-col; i++) {
-                    if (board.getBoard()[currentcol-i][currentcol-i] != null) {
+                for (int i =  1; i < currentcol-col; i++) {
+                    if (board.getBoard()[currentrow-i][currentcol-i] != null) {
                         return false;
                     }
                 }
@@ -62,14 +67,18 @@ public class Queen extends ChessPiece{
 
 
         //like Rook
+        //row <->
         if(currentrow-row==0 && currentcol-col!=0) {
+            //to the right ->
             if (currentcol - col < 0) {
+                //check whether path is free
                 for (int i = currentcol + 1; i < col; i++) {
                     if (board.getBoard()[currentrow][i] != null) {
                         return false;
                     }
                 }
             }
+            //to the left <-
             else {
                 for (int i = currentcol - 1; i > col; i--) {
                     if (board.getBoard()[currentrow][i] != null) {
@@ -78,7 +87,9 @@ public class Queen extends ChessPiece{
                 }
             }
         }
+        //column
         else if(currentcol-col==0 && currentrow-row!=0) {
+            //down v
             if (currentrow - row < 0) {
                 for (int i = currentrow + 1; i < row; i++) {
                     if (board.getBoard()[i][currentcol] != null) {
@@ -86,6 +97,7 @@ public class Queen extends ChessPiece{
                     }
                 }
             }
+            //up ^
             else {
                 for (int i = currentrow - 1; i > row; i--) {
                     if (board.getBoard()[i][currentcol] != null) {
@@ -94,7 +106,9 @@ public class Queen extends ChessPiece{
                 }
             }
         }
+        //check whether field is in range
         if((currentcol-col==0 || currentrow-row==0)&&!(currentcol-col==0 && currentrow-row==0)){
+            //same for every class
             if(board.getBoard()[row][col]==null||board.getBoard()[row][col].getColor()!=this.getColor()){
                 return true;
             }

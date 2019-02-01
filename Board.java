@@ -73,15 +73,15 @@ public class Board implements Serializable{
 
     //Get the current board and turn it into a String visualizing it
     public String toString(){
-        String Result=" a.b.cd.e.fg.h\n";
+        String Result="  a  b  c d  e  f g  h\n";
         ChessPiece[][] Board=getBoard();
         for(int i=0;i<8;i++) {
-            Result+=(i+1);
+            Result+=(i+1)+"|";
             for (int j = 0; j < 8; j++) {
                 if(Board[i][j]==null){
-                    Result+="\u26da";
+                    Result+="\u26da"+"|";
                 }
-                else{Result+=Board[i][j].toString();}
+                else{Result+=Board[i][j].toString()+"|";}
             }
             Result+="\n";
         }
